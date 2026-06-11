@@ -132,3 +132,13 @@ dependencies {
   "ksp"(libs.androidx.room.compiler)
   "ksp"(libs.moshi.kotlin.codegen)
 }
+
+tasks.register<Copy>("copyApksToBuildOutputs") {
+    from(layout.buildDirectory.dir("outputs/apk"))
+    include("**/*.apk")
+    eachFile {
+        path = name // Flattens directory so files sit in the root of destination
+    }
+    into(rootProject.file(".build-outputs"))
+    includeEmptyDirs = false
+}
